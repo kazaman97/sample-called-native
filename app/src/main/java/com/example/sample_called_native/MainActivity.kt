@@ -1,14 +1,11 @@
 package com.example.sample_called_native
 
 import android.os.Bundle
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.sample_called_native.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    private val sampleHashMap = HashMap<String, String>()
-
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var callFromNative: CallFromNative
@@ -18,9 +15,9 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         callFromNative = CallFromNative.newInstance()
-
-//        sampleHashMap["okinawa"] = "naha"
-//        sampleHashMap["iwate"] = "morioka"
+        callFromNative.setListener(this).observe(this) {
+            binding.sec.text = it.toString()
+        }
 
         binding.startButton.setOnClickListener {
             callFromNative.startCountUp()
@@ -31,6 +28,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Example of a call to a native method
-        findViewById<TextView>(R.id.sample_text).text = callFromNative.stringFromJNI()
+        binding.sec.text = callFromNative.stringFromJNI()
     }
 }

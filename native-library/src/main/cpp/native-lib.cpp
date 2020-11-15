@@ -52,6 +52,15 @@ bool readFile(const std::string& path) {
 //    return true;
 //}
 
+void setJavaCount(JNIEnv *env, int value) {
+    auto clazz = env->FindClass("com/example/native_library/NativeLibrary");
+    auto methodID = env->GetStaticMethodID(clazz, "setCount", "(I)V");
+    if (methodID != nullptr) {
+        env->CallStaticVoidMethod(clazz, methodID, value);
+    }
+    env->DeleteLocalRef(clazz);
+}
+
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_example_native_1library_NativeLibrary_stringFromJNI(JNIEnv *env, jobject thiz) {
         bool isRead = readFile(TEST);
@@ -72,7 +81,7 @@ JNIEXPORT void JNICALL
 Java_com_example_native_1library_NativeLibrary_startCountUp(JNIEnv *env, jobject thiz) {
     isStartCountUp = true;
     while (isStartCountUp) {
-        LOGE("count: %d", countNum);
+        setJavaCount(env, countNum);
         sleep(1);
         countNum++;
     }
