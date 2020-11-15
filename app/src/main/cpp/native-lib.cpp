@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <fstream>
 #include <iostream>
+#include <unistd.h>
 #include <string>
 #include <sstream>
 #include <filesystem>
@@ -13,6 +14,9 @@ using namespace std;
 #define TEST "./test.txt"
 
 #define LOGE(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
+
+static bool isStartCountUp = false;
+static int countNum = 0;
 
 bool readFile(const std::string& path) {
     ifstream ifs(path);
@@ -47,6 +51,18 @@ bool readFile(const std::string& path) {
 ////    }
 //    return true;
 //}
+
+void startCountUp() {
+    isStartCountUp = true;
+    while (isStartCountUp) {
+        sleep(1);
+        countNum++;
+    }
+}
+
+void stopCountUp() {
+    isStartCountUp = false;
+}
 
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_example_sample_1called_1native_MainActivity_stringFromJNI(
