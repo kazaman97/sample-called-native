@@ -22,11 +22,13 @@ class MainActivity : AppCompatActivity() {
 //        sampleHashMap["okinawa"] = "naha"
 //        sampleHashMap["iwate"] = "morioka"
 
+        binding.startButton.setOnClickListener {
+            callFromNative.startCountUp()
+        }
+
         binding.stopButton.setOnClickListener {
             callFromNative.stopCountUp()
         }
-
-        callFromNative.startCountUp()
 
         // Example of a call to a native method
         findViewById<TextView>(R.id.sample_text).text = callFromNative.stringFromJNI()

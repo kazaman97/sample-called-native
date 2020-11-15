@@ -22,12 +22,15 @@ class CallFromNative {
         if (countUpThread == null) {
             countUpThread = Thread {
                 nativeLibrary.startCountUp()
+            }.apply {
+                start()
             }
         }
-        countUpThread?.start()
     }
 
     fun stopCountUp() {
+        // TODO Threadを破棄する処理が必要
+        countUpThread = null
         nativeLibrary.stopCountUp()
     }
 }

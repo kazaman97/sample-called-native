@@ -9,6 +9,10 @@ class NativeLibrary {
     external fun startCountUp()
     external fun stopCountUp()
 
+    interface Listener {
+        fun onChangeCount(count: Int)
+    }
+
     companion object {
         // Used to load the 'native-lib' library on application startup.
         init {
