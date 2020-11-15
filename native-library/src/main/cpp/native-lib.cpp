@@ -52,18 +52,6 @@ bool readFile(const std::string& path) {
 //    return true;
 //}
 
-void startCountUp() {
-    isStartCountUp = true;
-    while (isStartCountUp) {
-        sleep(1);
-        countNum++;
-    }
-}
-
-void stopCountUp() {
-    isStartCountUp = false;
-}
-
 extern "C" JNIEXPORT jstring JNICALL
 Java_com_example_native_1library_NativeLibrary_stringFromJNI(JNIEnv *env, jobject thiz) {
         bool isRead = readFile(TEST);
@@ -77,4 +65,21 @@ Java_com_example_native_1library_NativeLibrary_stringFromJNI(JNIEnv *env, jobjec
 
 //        return env->NewStringUTF(stringStream.str().c_str());
     return env->NewStringUTF("hello");
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_native_1library_NativeLibrary_startCountUp(JNIEnv *env, jobject thiz) {
+    isStartCountUp = true;
+    while (isStartCountUp) {
+        LOGE("count: %d", countNum);
+        sleep(1);
+        countNum++;
+    }
+}
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_native_1library_NativeLibrary_stopCountUp(JNIEnv *env, jobject thiz) {
+    isStartCountUp = false;
 }

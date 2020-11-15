@@ -6,6 +6,8 @@ class NativeLibrary {
      * which is packaged with this application.
      */
     external fun stringFromJNI(): String
+    external fun startCountUp()
+    external fun stopCountUp()
 
     companion object {
         // Used to load the 'native-lib' library on application startup.

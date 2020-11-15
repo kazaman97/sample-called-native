@@ -14,5 +14,20 @@ class CallFromNative {
 
     private val nativeLibrary = NativeLibrary()
 
+    private var countUpThread: Thread? = null
+
     fun stringFromJNI() = nativeLibrary.stringFromJNI()
+
+    fun startCountUp() {
+        if (countUpThread == null) {
+            countUpThread = Thread {
+                nativeLibrary.startCountUp()
+            }
+        }
+        countUpThread?.start()
+    }
+
+    fun stopCountUp() {
+        nativeLibrary.stopCountUp()
+    }
 }
