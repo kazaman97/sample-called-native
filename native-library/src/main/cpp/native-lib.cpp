@@ -65,18 +65,16 @@ void stopCountUp() {
 }
 
 extern "C" JNIEXPORT jstring JNICALL
-Java_com_example_sample_1called_1native_MainActivity_stringFromJNI(
-        JNIEnv *env,
-        jobject /* this */) {
-    bool isRead = readFile(TEST);
+Java_com_example_native_1library_NativeLibrary_stringFromJNI(JNIEnv *env, jobject thiz) {
+        bool isRead = readFile(TEST);
 //    bool isPrintFileName = printCurrentFileName();
 
-    stringstream stringStream;
-    stringStream << "readFile: ";
-    stringStream << (isRead ? "Success" : "Failed") << endl;
+        stringstream stringStream;
+        stringStream << "readFile: ";
+        stringStream << (isRead ? "Success" : "Failed") << endl;
 //    stringStream << "printCurrentFileName";
 //    stringStream << (isPrintFileName ? "Success" : "Failed") << endl;
 
-    return env->NewStringUTF(stringStream.str().c_str());
-//    return env->NewStringUTF("hello");
+//        return env->NewStringUTF(stringStream.str().c_str());
+    return env->NewStringUTF("hello");
 }
