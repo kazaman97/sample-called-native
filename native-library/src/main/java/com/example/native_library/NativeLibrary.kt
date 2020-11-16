@@ -3,7 +3,7 @@ package com.example.native_library
 import android.app.Activity
 import android.util.Log
 
-class NativeLibrary {
+class NativeLibrary() {
     /**
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
@@ -12,17 +12,15 @@ class NativeLibrary {
     external fun startCountUp()
     external fun stopCountUp()
 
-    interface Listener {
-        fun onChangeCount(count: Int)
-    }
-
     companion object {
+        interface Listener {
+            fun onChangeCount(count: Int)
+        }
+
         private var listener: Listener? = null
 
-        fun setListener(activity: Activity) {
-            if (activity is Listener) {
-                listener = activity
-            }
+        fun setListener(listener: Listener) {
+            this.listener = listener
         }
 
         @JvmStatic

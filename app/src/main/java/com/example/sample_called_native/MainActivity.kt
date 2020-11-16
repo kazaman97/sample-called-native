@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.example.sample_called_native.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+internal class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var callFromNative: CallFromNative
@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         callFromNative = CallFromNative.newInstance()
-        callFromNative.setListener(this).observe(this) {
+        callFromNative.count.observe(this) {
             binding.sec.text = it.toString()
         }
 
