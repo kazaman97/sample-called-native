@@ -6,8 +6,8 @@
 #define SAMPLE_CALLED_NATIVE_NATIVE_LIB_H
 
 #define TAG "NATIVE_LIB"
-#define BUFF_SIZE 100
+#define LOGE(...) __android_log_print(ANDROID_LOG_DEBUG, TAG, __VA_ARGS__)
 
-bool readFile(const std::string& path);
+void setJavaCount(JNIEnv *env, int value);
 
 #endif //SAMPLE_CALLED_NATIVE_NATIVE_LIB_H
