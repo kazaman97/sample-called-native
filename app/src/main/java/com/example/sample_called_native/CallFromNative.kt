@@ -1,7 +1,5 @@
 package com.example.sample_called_native
 
-import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.native_library.NativeLibrary
 
@@ -22,12 +20,12 @@ internal class CallFromNative : NativeLibrary.Companion.Listener {
 
     private var countUpThread: Thread? = null
 
-    private val _count = MutableLiveData<Int>()
-    val count: LiveData<Int> = _count
+    private var count: MutableLiveData<Int>? = null
 
     fun stringFromJNI() = nativeLibrary.stringFromJNI()
 
-    fun startCountUp() {
+    fun startCountUp(_count: MutableLiveData<Int>) {
+        count = _count
         if (countUpThread == null) {
             countUpThread = Thread {
                 nativeLibrary.startCountUp()
@@ -39,11 +37,11 @@ internal class CallFromNative : NativeLibrary.Companion.Listener {
 
     fun stopCountUp() {
         countUpThread = null
+        count = null
         nativeLibrary.stopCountUp()
     }
 
     override fun onChangeCount(count: Int) {
-        Log.d("CALL", "呼ばれている")
-        _count.postValue(count)
+        this.count?.postValue(count)
     }
 }
